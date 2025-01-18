@@ -42,9 +42,6 @@ addressRouter.forEach((route) => {
 categoryRouter.forEach((route) => {
     switch (route.method) {
         case 'get' : router.get(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'post' : router.post(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'put' : router.put(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'delete' : router.delete(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
         default: break
     }
 })
@@ -52,9 +49,6 @@ categoryRouter.forEach((route) => {
 productRouter.forEach((route) => {
     switch (route.method) {
         case 'get' : router.get(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'post' : router.post(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'put' : router.put(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
-        case 'delete' : router.delete(`${route.endpoint}`, route.middleware ? route.middleware : (req, res, next) => {next()}, route.controller);break
         default: break
     }
 })

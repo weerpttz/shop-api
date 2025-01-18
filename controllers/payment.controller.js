@@ -20,13 +20,13 @@ export const paymentControllers = {
             if (order.createBy.toString() === req.auth.id.toString() && payment.id.toString() === req.params.id.toString()) {
                 const paymentResponse = {
                     id: payment.id,
-                    order_id: payment.order_id,
-                    total_price: payment.total_price,
-                    payment_method: payment.payment_method,
-                    paid_amount: payment.paid_amount,
-                    paid_date: payment.paid_date,
+                    orderId: payment.orderId,
+                    totalPrice: payment.totalPrice,
+                    paymentMethod: payment.paymentMethod,
+                    paidAmount: payment.paidAmount,
+                    paidDate: payment.paidDate,
                     slip: payment.slip,
-                    payment_status: payment.payment_status
+                    paymentStatus: payment.paymentStatus
                 }
                 res.send(paymentResponse)
             } else {
@@ -39,16 +39,16 @@ export const paymentControllers = {
 
     async onCreate (req, res) {
         try {
-            const { total_price, payment_method, paid_amount, paid_date, slip, payment_status } = req.body.data
+            const { totalPrice, paymentMethod, paidAmount, paidDate, slip, paymentStatus } = req.body.data
             const order = await Order.findByPk(req.params.id)
             await Payment.create({
-                order_id: order.id,
-                total_price,
-                payment_method,
-                paid_amount,
-                paid_date,
+                orderId: order.id,
+                totalPrice,
+                paymentMethod,
+                paidAmount,
+                paidDate,
                 slip,
-                payment_status
+                paymentStatus
             })
             res.send("CREATE PAYMENT")
         } catch (error) {
@@ -64,12 +64,12 @@ export const paymentControllers = {
                 return res.send("You are not authorization.")
             }
             if(order.createBy.toString() === req.auth.id.toString() && payment.id.toString() === req.params.id.toString()) {
-                payment.total_price = req.body.total_price,
-                payment.payment_method = req.body.payment_method,
-                payment.paid_amount = req.body.paid_amount,
-                payment.paid_date = req.body.paid_date,
+                payment.totalPrice = req.body.totalPrice,
+                payment.paymentMethod = req.body.paymentMethod,
+                payment.paidAmount = req.body.paidAmount,
+                payment.paidDate = req.body.paidDate,
                 payment.slip = req.body.slip,
-                payment.payment_status = req.body.payment_status
+                payment.paymentStatus = req.body.paymentStatus
             } else {
                 return res.send("You are not authorization.")
             }

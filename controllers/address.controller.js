@@ -16,19 +16,19 @@ export const addressControllers = {
             if (!address) {
                 return res.send("You are not authorization.")
             }
-            if (address.user_id.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
+            if (address.userId.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
                 const addressResponse = {
                     id: address.id,
-                    user_id: address.user_id,
-                    first_name: address.first_name,
-                    last_name: address.last_name,
-                    phone_number: address.phone_number,
+                    userId: address.userId,
+                    firstName: address.firstName,
+                    lastName: address.lastName,
+                    phoneNumber: address.phoneNumber,
                     address: address.address,
-                    sub_district: address.sub_district,
+                    subDistrict: address.subDistrict,
                     district: address.district,
                     province: address.province,
                     country: address.country,
-                    zip_code: address.zip_code
+                    zipCode: address.zipCode
                 }
                 res.send(addressResponse)
             } else {
@@ -41,18 +41,20 @@ export const addressControllers = {
 
     async onCreate (req, res) {
         try {
-            const { first_name, last_name, phone_number, address, sub_district, district, province, country, zip_code } = req.body.data
+            const { firstName, lastName, phoneNumber, address, subDistrict, district, province, country, zipCode } = req.body.data
             await Address.create({
-                user_id: req.auth.id,
-                first_name,
-                last_name,
-                phone_number,
+                userId: req.auth.id,
+                firstName,
+                lastName,
+                phoneNumber,
                 address,
-                sub_district,
+                subDistrict,
                 district,
                 province,
                 country,
-                zip_code
+                zipCode,
+                updateBy,
+                deleteBy
             })
             res.send("CREATE ADDRESS")
         } catch (error) {
@@ -66,16 +68,17 @@ export const addressControllers = {
             if (!address) {
                 return res.send("You are not authorization.")
             }
-            if(address.user_id.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
-                address.first_name = req.body.first_name
-                address.last_name = req.body.last_name
-                address.phone_number = req.body.phone_number
+            if(address.userId.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
+                address.firstName = req.body.firstName
+                address.lastName = req.body.lastName
+                address.phoneNumber = req.body.phoneNumber
                 address.address = req.body.address
-                address.sub_district = req.body.sub_district
+                address.subDistrict = req.body.subDistrict
                 address.district = req.body.district
                 address.province = req.body.province
                 address.country = req.body.country
-                address.zip_code = req.body.zip_code
+                address.zipCode = req.body.zipCode
+                address.updateBy = req.auth.id
             } else {
                 return res.send("You are not authorization.")
             }
@@ -92,7 +95,8 @@ export const addressControllers = {
             if (!address) {
                 return res.send("You are not authorization.")
             }
-            if(address.user_id.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
+            if(address.userId.toString() === req.auth.id.toString() && address.id.toString() === req.params.id.toString()) {
+                address.deleteBy = req.auth.id
                 address.destroy()
             } else {
                 return res.send("You are not authorization.")

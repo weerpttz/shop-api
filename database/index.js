@@ -11,11 +11,13 @@ export const User = sequelize.define('User', {
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     email: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    phone_number: DataTypes.STRING,
-    birth_date: DataTypes.DATE,
-    country: DataTypes.STRING
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
+    birthDate: DataTypes.DATE,
+    country: DataTypes.STRING,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'created_at',
@@ -24,13 +26,13 @@ export const User = sequelize.define('User', {
     paranoid: true,
     timestamps: true
 })
-export const Session_Token = sequelize.define('Session_Token', {
+export const SessionToken = sequelize.define('SessionToken', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    user_id: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     username: DataTypes.STRING,
     token: DataTypes.STRING
 },
@@ -47,16 +49,18 @@ export const Address = sequelize.define('Address', {
         autoIncrement: true,
         primaryKey: true
     },
-    user_id: DataTypes.INTEGER,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    phone_number: DataTypes.STRING,
+    userId: DataTypes.INTEGER,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    phoneNumber: DataTypes.STRING,
     address: DataTypes.STRING,
-    sub_district: DataTypes.STRING,
+    subDistrict: DataTypes.STRING,
     district: DataTypes.STRING,
     province: DataTypes.STRING,
     country: DataTypes.STRING,
-    zip_code: DataTypes.STRING
+    zipCode: DataTypes.STRING,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -72,20 +76,9 @@ export const Category = sequelize.define('Category', {
         primaryKey: true
     },
     name : DataTypes.STRING,
-    create_by: DataTypes.INTEGER
-})
-export const Product = sequelize.define('Product', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    name: DataTypes.STRING,
-    image: DataTypes.STRING,
-    description: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    create_by: DataTypes.INTEGER
+    createBy: DataTypes.INTEGER,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -94,14 +87,21 @@ export const Product = sequelize.define('Product', {
     paranoid: true,
     timestamps: true
 })
-export const Product_Category = sequelize.define('Product_Category', {
+export const Product = sequelize.define('Product', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    category_id: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
+    categoryId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
+    image: DataTypes.STRING,
+    description: DataTypes.STRING,
+    quantity: DataTypes.INTEGER,
+    price: DataTypes.INTEGER,
+    createBy: DataTypes.INTEGER,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -116,9 +116,12 @@ export const Order = sequelize.define('Order', {
         autoIncrement: true,
         primaryKey: true
     },
+    userId: DataTypes.INTEGER,
     discount: DataTypes.INTEGER,
-    order_status: DataTypes.STRING,
-    create_by: DataTypes.INTEGER
+    orderStatus: DataTypes.STRING,
+    createBy: DataTypes.INTEGER,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -127,19 +130,19 @@ export const Order = sequelize.define('Order', {
     paranoid: true,
     timestamps: true
 })
-export const Order_Product_Cache = sequelize.define('Order_Product_Cache', {
+export const OrderProductCache = sequelize.define('Order_Product_Cache', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    order_id: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
-    product_name_cache: DataTypes.STRING,
-    product_image_cache: DataTypes.STRING,
-    product_description_cache: DataTypes.STRING,
-    product_price_cache: DataTypes.STRING,
-    product_quantity_cache: DataTypes.STRING,
+    orderId: DataTypes.INTEGER,
+    productId: DataTypes.INTEGER,
+    productNameCache: DataTypes.STRING,
+    productImageCache: DataTypes.STRING,
+    productDescriptionCache: DataTypes.STRING,
+    productPriceCache: DataTypes.STRING,
+    productQuantityCache: DataTypes.STRING
 },
 {
     createdAt: 'create_at',
@@ -154,13 +157,16 @@ export const Payment = sequelize.define('Payment',{
         autoIncrement: true,
         primaryKey: true
     },
-    order_id: DataTypes.INTEGER,
-    total_price: DataTypes.INTEGER,
-    payment_method: DataTypes.STRING,
-    paid_amount: DataTypes.INTEGER,
-    paid_date: DataTypes.DATE,
+    orderId: DataTypes.INTEGER,
+    totalPrice: DataTypes.INTEGER,
+    paymentMethod: DataTypes.STRING,
+    paidAmount: DataTypes.INTEGER,
+    paidDate: DataTypes.DATE,
     slip: DataTypes.STRING,
-    payment_status: DataTypes.STRING
+    paymentStatus: DataTypes.STRING,
+    createBy: DataTypes.INTEGER,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -175,19 +181,22 @@ export const Shipping = sequelize.define('Shipping', {
         autoIncrement: true,
         primaryKey: true
     },
-    address_id: DataTypes.INTEGER,
-    order_id: DataTypes.INTEGER,
-    shipping_type: DataTypes.STRING,
-    address_first_name: DataTypes.STRING,
-    address_last_name: DataTypes.STRING,
-    address_phone_number: DataTypes.STRING,
-    address_address: DataTypes.STRING,
-    address_sub_district: DataTypes.STRING,
-    address_district: DataTypes.STRING,
-    address_province: DataTypes.STRING,
-    address_country: DataTypes.STRING,
-    address_zip_code: DataTypes.STRING,
-    shipping_status: DataTypes.STRING
+    addressId: DataTypes.INTEGER,
+    orderId: DataTypes.INTEGER,
+    shippingType: DataTypes.STRING,
+    addressFirstName: DataTypes.STRING,
+    addressLastName: DataTypes.STRING,
+    addressPhoneNumber: DataTypes.STRING,
+    addressAddress: DataTypes.STRING,
+    addressSubDistrict: DataTypes.STRING,
+    addressDistrict: DataTypes.STRING,
+    addressProvince: DataTypes.STRING,
+    addressCountry: DataTypes.STRING,
+    addressZipCode: DataTypes.STRING,
+    shippingStatus: DataTypes.STRING,
+    createBy: DataTypes.INTEGER,
+    updateBy: DataTypes.INTEGER,
+    deleteBy: DataTypes.INTEGER
 },
 {
     createdAt: 'create_at',
@@ -197,7 +206,7 @@ export const Shipping = sequelize.define('Shipping', {
     timestamps: true
 })
 
-export const Admin = sequelize.define('Admin_User', {
+export const Admin = sequelize.define('AdminUser', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -213,13 +222,13 @@ export const Admin = sequelize.define('Admin_User', {
     paranoid: true,
     timestamps: true
 })
-export const Admin_Token = sequelize.define('Session_Admin_Token', {
+export const AdminToken = sequelize.define('AdminToken', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    admin_id: DataTypes.INTEGER,
+    adminId: DataTypes.INTEGER,
     username: DataTypes.STRING,
     token: DataTypes.STRING
 },

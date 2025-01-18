@@ -16,12 +16,12 @@ export const orderControllers = {
             if (!order) {
                 return res.send("You are not authorization.")
             }
-            if (order.create_by.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
+            if (order.createBy.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
                 const orderResponse = {
                     id: order.id,
                     discount: order.discount,
-                    order_status: order.orderStatus,
-                    create_by: order.create_by
+                    orderStatus: order.orderStatus,
+                    createBy: order.createBy
                 }
                 res.send(orderResponse)
             } else {
@@ -34,11 +34,11 @@ export const orderControllers = {
 
     async onCreate (req, res) {
         try {
-            const { discount, order_status } = req.body.data
+            const { discount, orderStatus } = req.body.data
             await Order.create({
                 discount,
-                order_status,
-                create_by: req.auth.id
+                orderStatus,
+                createBy: req.auth.id
             })
             res.send("CREATE ORDER")
         } catch (error) {
@@ -52,9 +52,9 @@ export const orderControllers = {
             if (!order) {
                 return res.send("You are not authorization.")
             }
-            if(order.create_by.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
-                order.name = req.body.name,
-                order.order_status = req.body.order_status
+            if(order.createBy.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
+                order.discount = req.body.discount,
+                order.orderStatus = req.body.orderStatus
             } else {
                 return res.send("You are not authorization.")
             }
@@ -71,7 +71,7 @@ export const orderControllers = {
             if (!order) {
                 return res.send("You are not authorization.")
             }
-            if(order.create_by.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
+            if(order.createBy.toString() === req.auth.id.toString() && order.id.toString() === req.params.id.toString()) {
                 order.destroy()
             } else {
                 return res.send("You are not authorization.")

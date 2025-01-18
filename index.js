@@ -2,8 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import router from './routes/api/index.js'
-import adminrouter from './routes/api/backserver_admin/index.js'
-import { adminControllers } from './controllers/backserver_admin/admin.controller.js'
+import adminRouter from './routes/api/backoffice/index.js'
 
 
 const app = express()
@@ -21,7 +20,7 @@ app.get('/', (req, res) => {
     res.send(server)
 })
 
-app.use('/backoffice/api', adminrouter)
+app.use('/backoffice/api', adminRouter)
 app.use('/api', router)
 
 

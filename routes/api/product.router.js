@@ -9,27 +9,9 @@ export default [
         controller: productControllers.getAll
     },
     {
-        endpoint: '/product',
-        method: 'post',
-        middleware: authMiddleware,
-        controller: productControllers.onCreate
-    },
-    {
         endpoint: '/product/:id',
         method: 'get',
         middleware: authMiddleware,
         controller: productControllers.getById
-    },
-    {
-        endpoint: '/product/:id',
-        method: 'put',
-        middleware: authMiddleware,
-        controller: productControllers.onUpdate
-    },
-    {
-        endpoint: '/product/:id',
-        method: 'delete',
-        middleware: authMiddleware,
-        controller: productControllers.onDelete
     }
 ]

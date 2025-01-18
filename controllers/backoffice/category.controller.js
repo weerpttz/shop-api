@@ -1,4 +1,4 @@
-import { Category } from "../database/index.js";
+import { Category } from "../../database/index.js";
 
 export const categoryControllers = {
     async getAll (req, res) {

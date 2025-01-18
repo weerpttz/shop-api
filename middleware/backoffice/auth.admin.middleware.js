@@ -1,7 +1,7 @@
-import { SessionToken } from '../database/index.js'
+import { AdminToken } from '../../database/index.js'
 import jwt from 'jsonwebtoken'
 
-const authMiddleware = async (req, res, next) => {
+const authAdminMiddleware = async (req, res, next) => {
     if (!req.headers.authorization) {
         return res.send("You are not authorization.")
     }
@@ -10,7 +10,7 @@ const authMiddleware = async (req, res, next) => {
         return res.send("You are not authorization.")
     }
     token = token[1]
-    const checkToken = await SessionToken.findOne({
+    const checkToken = await AdminToken.findOne({
         where: {
             token: token
         }
@@ -22,4 +22,4 @@ const authMiddleware = async (req, res, next) => {
     next()
 }
 
-export default authMiddleware
+export default authAdminMiddleware

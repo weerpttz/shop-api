@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Admin, Admin_Token } from "../../database/index.js";
+import { Admin, AdminToken } from "../../database/index.js";
 import jwt from 'jsonwebtoken'
 
 export const adminControllers = {
@@ -36,7 +36,7 @@ export const adminControllers = {
                 return res.status(400).send("Username or Password is incorrect")
             }
 
-            const adminLogin = await Admin_Token.findOne({
+            const adminLogin = await AdminToken.findOne({
                 where: {
                     username: admin.username
                 }
@@ -46,15 +46,15 @@ export const adminControllers = {
             }
             
             const token = jwt.sign({ id: admin.id, username: admin.username}, 'adminBitShop999', { algorithm: 'HS256' })
-            await Admin_Token.create({
-                admin_id: admin.id,
+            await AdminToken.create({
+                adminId: admin.id,
                 username: admin.username,
                 token: token
             })
 
             return res.send({ data: token})
         } catch (error) {
-            res.error(error)
+            console.log(error)
         }
     }
 }
